@@ -3,6 +3,9 @@ import { NgModule } from '@angular/core';
 /* Router */
 import {RouterModule, Routes} from '@angular/router';
 
+/** Reactive Form */
+import { ReactiveFormsModule } from '@angular/forms';
+
 import { AppRoutingModule } from './app-routing.module';
 /* Component */
 import { AppComponent } from './app.component';
@@ -12,6 +15,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 /* Angular Material */
 import { MatSliderModule } from '@angular/material/slider';
+import { GenerateFormComponent } from './generate-form/generate-form.component';
 
 /* define Route */
 const appRoutes: Routes = [
@@ -28,7 +32,8 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     HomeComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    GenerateFormComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +42,8 @@ const appRoutes: Routes = [
       appRoutes
     ),
     BrowserAnimationsModule,
-    MatSliderModule
+    MatSliderModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
