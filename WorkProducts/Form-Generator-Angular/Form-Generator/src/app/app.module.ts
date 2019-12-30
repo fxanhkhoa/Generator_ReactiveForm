@@ -17,9 +17,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from '@angular/material/slider';
 import { GenerateFormComponent } from './generate-form/generate-form.component';
 
+/** Drag Drop Module */
+import { DragDropModule } from '@angular/cdk/drag-drop';
+
 /* define Route */
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
+  { path: 'generate-form', component: GenerateFormComponent },
   {
     path: '',
     redirectTo: '/home',
@@ -43,7 +47,8 @@ const appRoutes: Routes = [
     ),
     BrowserAnimationsModule,
     MatSliderModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DragDropModule
   ],
   providers: [],
   bootstrap: [AppComponent]
