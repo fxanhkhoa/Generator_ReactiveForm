@@ -24,6 +24,13 @@ export class GenerateFormComponent implements OnInit {
     'Walk dog'
   ];
 
+  listFormField = [
+    'input',
+    'select',
+    'radio',
+    'check box'
+  ];
+
   constructor(private _formBuilder: FormBuilder) { }
 
   ngOnInit() {
@@ -31,12 +38,22 @@ export class GenerateFormComponent implements OnInit {
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
+      console.log("Same container")
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
+      console.log("Different container")
       transferArrayItem(event.previousContainer.data,
                         event.container.data,
                         event.previousIndex,
                         event.currentIndex);
+    }
+  }
+
+  dropFormField(event: CdkDragDrop<string[]>) {
+    if (event.previousContainer === event.container) {
+      console.log("Same container")
+    } else {
+      console.log("Different container")
     }
   }
 }

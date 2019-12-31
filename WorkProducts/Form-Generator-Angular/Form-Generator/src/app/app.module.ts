@@ -16,6 +16,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 /* Angular Material */
 import { MatSliderModule } from '@angular/material/slider';
 import { GenerateFormComponent } from './generate-form/generate-form.component';
+import { MatGridListModule } from '@angular/material';
 
 /** Drag Drop Module */
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -48,7 +49,8 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     MatSliderModule,
     ReactiveFormsModule,
-    DragDropModule
+    DragDropModule,
+    MatGridListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

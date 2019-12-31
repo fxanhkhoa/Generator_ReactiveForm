@@ -1,17 +1,18 @@
-<div class="example-container">
-   <h2>To do</h2>
- 
-   <div
-     cdkDropList
-     #todoList="cdkDropList"
-     [cdkDropListData]="todo"
-     [cdkDropListConnectedTo]="[doneList]"
-     class="example-list"
-     (cdkDropListDropped)="drop($event)">
-     <div class="example-box" *ngFor="let item of todo" cdkDrag>{{item}}</div>
-   </div>
- </div>
- 
+<div class="container">
+  <div class="example-container">
+    <h2>To do</h2>
+  
+    <div
+      cdkDropList
+      #todoList="cdkDropList"
+      [cdkDropListData]="todo"
+      [cdkDropListConnectedTo]="[doneList]"
+      class="example-list"
+      (cdkDropListDropped)="drop($event)">
+      <div class="example-box" *ngFor="let item of todo" cdkDrag>{{item}}</div>
+    </div>
+  </div>
+  
  <div class="example-container">
    <h2>Done</h2>
  
@@ -25,4 +26,36 @@
      <div class="example-box" *ngFor="let item of done" cdkDrag>{{item}}</div>
    </div>
  </div>
+  
  
+ 
+ <mat-grid-list cols="3" rowHeight="3:1">
+   
+   <!-- List Form Field Title -->
+   <mat-grid-tile [colspan]="1" [rowspan]="1">
+     <h2 class="inside-grid">Pick Here</h2>
+   </mat-grid-tile>
+
+   <!-- Preview Title -->
+   <mat-grid-tile [colspan]="2" [rowspan]="1">
+     <h2 class="inside-grid">Preview</h2>
+   </mat-grid-tile>
+   
+   <!-- List Form Field -->
+   <mat-grid-tile [colspan]="1" [rowspan]="2">
+     <div
+       cdkDropList
+       [cdkDropListData]="listFormField"
+       class="inside-grid"
+       (cdkDropListDropped)="dropFormField($event)">
+       <div class="box1" *ngFor="let item of listFormField" cdkDrag>{{item}}</div>
+     </div>
+   </mat-grid-tile>
+ 
+   <!-- Preview -->
+   <mat-grid-tile [colspan]="2" [rowspan]="2">
+     <div class="inside-grid">2</div>
+   </mat-grid-tile>
+ </mat-grid-list>
+</div>
+
