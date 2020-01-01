@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>{{description}}</h2>
+
+<mat-dialog-content [formGroup]="inputForm">
+   <mat-form-field>
+      <input 
+         matInput 
+         placeholder="Input ID"
+         id="idField"
+         [formControl] = "inputForm.get('idField')"
+         formControlName= "idField"
+      >
+      <mat-error *ngIf="inputForm.get('idField')?.hasError('required')">
+         This Field is <strong>required</strong>
+       </mat-error>
+   </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+
+</mat-dialog-actions>

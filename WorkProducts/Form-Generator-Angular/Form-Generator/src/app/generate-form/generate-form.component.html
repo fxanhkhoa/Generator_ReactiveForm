@@ -45,16 +45,27 @@
    <mat-grid-tile [colspan]="1" [rowspan]="2">
      <div
        cdkDropList
+       #formfieldlist="cdkDropList"
        [cdkDropListData]="listFormField"
+       [cdkDropListConnectedTo]="[previewfield]"
        class="inside-grid"
-       (cdkDropListDropped)="dropFormField($event)">
+       (cdkDropListDropped)="dropFormField($event)"
+      >
        <div class="box1" *ngFor="let item of listFormField" cdkDrag>{{item}}</div>
      </div>
    </mat-grid-tile>
  
    <!-- Preview -->
    <mat-grid-tile [colspan]="2" [rowspan]="2">
-     <div class="inside-grid">2</div>
+      <div
+        cdkDropList
+        #previewfield="cdkDropList"
+        [cdkDropListConnectedTo]="[formfieldlist]"
+        class="inside-grid example-list preview-list"
+        (cdkDropListDropped)="dropFormField($event)"
+      >
+
+      </div>
    </mat-grid-tile>
  </mat-grid-list>
 </div>

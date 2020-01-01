@@ -16,10 +16,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 /* Angular Material */
 import { MatSliderModule } from '@angular/material/slider';
 import { GenerateFormComponent } from './generate-form/generate-form.component';
-import { MatGridListModule } from '@angular/material';
+import { MatGridListModule, MatDialogModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 
 /** Drag Drop Module */
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { FieldInputComponent } from './field-input/field-input.component';
 
 /* define Route */
 const appRoutes: Routes = [
@@ -38,7 +39,8 @@ const appRoutes: Routes = [
     AppComponent,
     HomeComponent,
     PageNotFoundComponent,
-    GenerateFormComponent
+    GenerateFormComponent,
+    FieldInputComponent
   ],
   imports: [
     BrowserModule,
@@ -50,9 +52,13 @@ const appRoutes: Routes = [
     MatSliderModule,
     ReactiveFormsModule,
     DragDropModule,
-    MatGridListModule
+    MatGridListModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [FieldInputComponent]
 })
 export class AppModule { }
