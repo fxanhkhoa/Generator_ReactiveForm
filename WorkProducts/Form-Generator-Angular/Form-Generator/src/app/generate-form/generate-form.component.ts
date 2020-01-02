@@ -3,6 +3,7 @@ import { FormControl, FormBuilder } from '@angular/forms';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { FieldInputComponent } from '../field-input/field-input.component';
+import { FieldSelectComponent } from '../field-select/field-select.component';
 
 @Component({
   selector: 'app-generate-form',
@@ -33,7 +34,13 @@ export class GenerateFormComponent implements OnInit {
     'check box'
   ];
 
+  // For clear data debugging
+  previewData;
+
+  // Input Field Dialog
   fieldInputDialog: MatDialogRef<FieldInputComponent>;
+  // Select Field Dialog
+  fieldSelectDialog: MatDialogRef<FieldSelectComponent>;
 
   constructor(private _formBuilder: FormBuilder,
               private dialog: MatDialog) { }
@@ -56,16 +63,41 @@ export class GenerateFormComponent implements OnInit {
 
   dropFormField(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
-      console.log("Same container")
+      // console.log("Same container")
     } else {
-      console.log("Different container")
-      console.log(this.listFormField[event.previousIndex])
+      // console.log("Different container")
+      // console.log(this.listFormField[event.previousIndex])
       
       /** Input Field */
       if (event.previousIndex == 0){
         this.fieldInputDialog = this.dialog.open(FieldInputComponent,{
-          hasBackdrop: true
-        })
+          hasBackdrop: true,
+          // width: '250px',
+          // height: '200px'
+        });
+
+        this.fieldInputDialog.afterClosed().subscribe(
+          data => {
+            console.log("Dialog Output data", data);
+            this.previewData += JSON.stringify(data);;
+          }
+        );
+      } 
+      /** Select Field */
+      else if (event.previousIndex == 1){
+        this.fieldSelectDialog = this.dialog.open(FieldSelectComponent,{
+          hasBackdrop: true,
+          // width: '250px',
+          // height: '200px'
+        });
+      }
+      /** Radio Field */
+      else if (event.previousIndex == 2){
+
+      }
+      /** Check box */
+      else if (event.previousIndex == 3){
+
       }
     }
   }

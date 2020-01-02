@@ -73,6 +73,7 @@
 .preview-list{
   width: 95%;
   height: 100%;
+  word-wrap: break-word;
 }
 
 .box1.cdk-drop-list-dragging {
