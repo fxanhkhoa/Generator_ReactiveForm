@@ -36,6 +36,7 @@ export class FieldInputComponent implements OnInit {
   ];
 
   inputForm = this.fb.group({
+    fieldType: new FormControl({value: 'input', disabled: false}, []),
     idField: new FormControl('',[
       Validators.required
     ]),

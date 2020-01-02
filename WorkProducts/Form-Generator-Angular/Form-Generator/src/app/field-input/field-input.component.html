@@ -12,6 +12,22 @@
          <div class="container">
             <div class="row">
                <div class="col">
+                  <!-- Field Type -->
+                  <mat-form-field>
+                     <input
+                        matInput 
+                        placeholder = "Field_Type"
+                        id = "fieldType"
+                        [formControl] = "inputForm.get('fieldType')"
+                        formControlName= "fieldType"
+                        [readonly]='true'
+                        required
+                     >
+                  </mat-form-field>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col">
                   <!-- ID Field -->
                   <mat-form-field>
                      <input 
