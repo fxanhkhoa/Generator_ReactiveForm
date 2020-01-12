@@ -43,6 +43,23 @@
                      </mat-error>
                   </mat-form-field>
                </div>
+
+               <div class="col">
+                  <!-- Name Field -->
+                  <mat-form-field>
+                     <input 
+                        matInput 
+                        placeholder = "Input Name"
+                        id = "nameField"
+                        [formControl] = "inputForm.get('nameField')"
+                        formControlName= "nameField"
+                        required
+                     >
+                     <mat-error *ngIf="inputForm.get('nameField')?.hasError('required')">
+                        This Field is <strong>required</strong>
+                     </mat-error>
+                  </mat-form-field>
+               </div>
          
                <div class="col">
                <!-- Type Field -->

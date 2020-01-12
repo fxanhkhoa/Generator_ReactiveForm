@@ -40,6 +40,9 @@ export class FieldInputComponent implements OnInit {
     idField: new FormControl('',[
       Validators.required
     ]),
+    nameField: new FormControl('',[
+      Validators.required
+    ]),
     type: new FormControl('',[
       Validators.required
     ]),
