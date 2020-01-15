@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-field-select',
@@ -9,9 +10,13 @@ export class FieldSelectComponent implements OnInit {
 
   description = 'Select';
 
-  constructor() { }
+  constructor(public fb: FormBuilder) { }
 
   ngOnInit() {
   }
 
+  selectForm = this.fb.group({
+    id: new FormControl('',[]),
+    
+  })
 }
