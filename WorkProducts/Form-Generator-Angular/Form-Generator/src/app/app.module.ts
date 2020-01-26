@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 /* Router */
 import {RouterModule, Routes} from '@angular/router';
 
@@ -18,13 +18,16 @@ import { MatSliderModule } from '@angular/material/slider';
 import { GenerateFormComponent } from './generate-form/generate-form.component';
 import { MatGridListModule, MatDialogModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { MatOptionModule, MatSelectModule, MatButtonModule } from '@angular/material';
-import { MatTabsModule, MatIconModule } from '@angular/material';
+import { MatTabsModule, MatIconModule, MatChipsModule, MatRadioModule } from '@angular/material';
+import { MatCheckboxModule } from '@angular/material';
 
 /** Drag Drop Module */
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { FieldInputComponent } from './field-input/field-input.component';
 import { FieldSelectComponent } from './field-select/field-select.component';
+import { FieldRadioComponent } from './field-radio/field-radio.component';
+import { FieldCheckboxComponent } from './field-checkbox/field-checkbox.component';
 
 /* define Route */
 const appRoutes: Routes = [
@@ -45,7 +48,9 @@ const appRoutes: Routes = [
     PageNotFoundComponent,
     GenerateFormComponent,
     FieldInputComponent,
-    FieldSelectComponent
+    FieldSelectComponent,
+    FieldRadioComponent,
+    FieldCheckboxComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,10 +70,19 @@ const appRoutes: Routes = [
     MatSelectModule,
     MatButtonModule,
     MatTabsModule,
-    MatIconModule
+    MatIconModule,
+    MatChipsModule,
+    MatRadioModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [FieldInputComponent, FieldSelectComponent]
+  entryComponents: [
+    FieldInputComponent, 
+    FieldSelectComponent, 
+    FieldRadioComponent,
+    FieldCheckboxComponent
+  ],
+  schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

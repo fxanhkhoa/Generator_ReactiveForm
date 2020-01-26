@@ -1,9 +1,175 @@
 <h2 mat-dialog-title>{{description}}</h2>
 
-<mat-dialog-content>
+<mat-dialog-content [formGroup]="selectForm">
+    <mat-tab-group>
+        <!-- Tab Information -->
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon>note_add</mat-icon>
+                Fields Information
+            </ng-template>
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <!-- Field Type -->
+                        <mat-form-field>
+                            <input
+                                matInput 
+                                placeholder = "Field_Type"
+                                id = "fieldType"
+                                [formControl] = "selectForm.get('fieldType')"
+                                formControlName= "fieldType"
+                                [readonly]='true'
+                                required
+                            >
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                       <!-- ID Field -->
+                       <mat-form-field>
+                          <input 
+                             matInput 
+                             placeholder = "Input ID"
+                             id = "idField"
+                             [formControl] = "selectForm.get('idField')"
+                             formControlName= "idField"
+                             required
+                          >
+                          <mat-error *ngIf="selectForm.get('idField')?.hasError('required')">
+                             This Field is <strong>required</strong>
+                          </mat-error>
+                       </mat-form-field>
+                    </div>
+     
+                    <div class="col">
+                       <!-- Name Field -->
+                        <mat-form-field>
+                            <input 
+                                matInput 
+                                placeholder = "Input Name"
+                                id = "nameField"
+                                [formControl] = "selectForm.get('nameField')"
+                                formControlName= "nameField"
+                                required
+                            >
+                            <mat-error *ngIf="selectForm.get('nameField')?.hasError('required')">
+                                This Field is <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
 
+                
+                <div class="row">
+                  <div class="col">
+                     <!-- Place Hodler -->
+                     <mat-form-field>
+                        <input 
+                            matInput 
+                            placeholder = "Input placeholder"
+                            id = "placeholder"
+                            [formControl] = "selectForm.get('placeholder')"
+                            formControlName= "placeholder"
+                        >
+                     </mat-form-field>
+                  </div>
+
+                  <!-- Form control name -->
+                  <div class="col">
+                     <!-- Place Hodler -->
+                     <mat-form-field>
+                        <input 
+                            matInput 
+                            placeholder = "Input formControlName"
+                            id = "formControlNameField"
+                            [formControl] = "selectForm.get('formControlNameField')"
+                            formControlName= "formControlNameField"
+                        >
+                     </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <mat-form-field style="width: 100%;">
+                            <mat-chip-list #chipList aria-label="Collection selection">
+                              <mat-chip *ngFor="let collection of collections" [selectable]="'true'"
+                                       [removable]="'true'" (removed)="remove(collection)">
+                                {{collection}}
+                                <mat-icon matChipRemove>cancel</mat-icon>
+                              </mat-chip>
+                              <input placeholder="New Collection (use comma or enter to split)..."
+                                     [matChipInputFor]="chipList"
+                                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                     [matChipInputAddOnBlur]="'true'"
+                                     (matChipInputTokenEnd)="add($event)">
+                            </mat-chip-list>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </mat-tab>
+
+        <mat-tab>
+            <ng-template mat-tab-label>
+               <mat-icon>waves</mat-icon>
+               CSS
+            </ng-template>
+            <div class="container">
+               <div class="row">
+                  <div class="col">
+                     <mat-form-field style="width: 700px;">
+                        <mat-label>Input CSS</mat-label>
+                        <textarea
+                           matInput
+                           cdkTextareaAutosize
+                           #autosize="cdkTextareaAutosize"
+                           cdkAutosizeMinRows="1"
+                           cdkAutosizeMaxRows="30"
+                           id = "cssField"
+                           [formControl] = "selectForm.get('cssField')"
+                           formControlName = "cssField"
+                        >
+                        </textarea>
+                     </mat-form-field>
+                  </div>
+               </div>
+            </div>
+         </mat-tab>
+   
+         <!-- Tab Script -->
+         <mat-tab>
+            <ng-template mat-tab-label>
+               <mat-icon>list_alt</mat-icon>
+               Script
+            </ng-template>
+            <div class="container">
+               <div class="row">
+                  <div class="col">
+                     <mat-form-field style="width: 700px;">
+                        <mat-label>Input Script</mat-label>
+                        <textarea
+                           matInput
+                           cdkTextareaAutosize
+                           #autosize="cdkTextareaAutosize"
+                           cdkAutosizeMinRows="1"
+                           cdkAutosizeMaxRows="30"
+                           id = "scriptField"
+                           [formControl] = "selectForm.get('scriptField')"
+                           formControlName = "scriptField"
+                        >
+                        </textarea>
+                     </mat-form-field>
+                  </div>
+               </div>
+            </div>
+         </mat-tab>
+    </mat-tab-group>
 </mat-dialog-content>
 
 <mat-dialog-actions>
-    
+    <button mat-raised-button (click)="close()">Close</button>
+    <button mat-raised-button color="primary" (click)="save()" [disabled]="!selectForm.valid">Save</button>
 </mat-dialog-actions>

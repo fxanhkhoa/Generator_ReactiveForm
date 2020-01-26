@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormBuilder } from '@angular/forms';
+import { FormControl, FormBuilder, Validators } from '@angular/forms';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { FieldInputComponent } from '../field-input/field-input.component';
 import { FieldSelectComponent } from '../field-select/field-select.component';
+import { FieldRadioComponent } from '../field-radio/field-radio.component';
+import { FieldCheckboxComponent } from '../field-checkbox/field-checkbox.component';
 
 @Component({
   selector: 'app-generate-form',
@@ -35,14 +37,29 @@ export class GenerateFormComponent implements OnInit {
   ];
 
   // For clear data debugging
-  previewData;
+  previewData = "";
 
-  // Input Field Dialog
+  // *Input Field Dialog
   fieldInputDialog: MatDialogRef<FieldInputComponent>;
-  // Select Field Dialog
+  // *Select Field Dialog
   fieldSelectDialog: MatDialogRef<FieldSelectComponent>;
+  // *Radio Field Dialog
+  fieldRadioDialog: MatDialogRef<FieldRadioComponent>;
+  // *Checkbox Field Dialog
+  fieldCheckboxDialog: MatDialogRef<FieldCheckboxComponent>;
 
-  constructor(private _formBuilder: FormBuilder,
+  // *Preview Form Group
+  // * Array of Controls
+  previewHeight = 2;
+  exportJson = {
+    application: []
+  }
+
+  previewFormGroup = this.fb.group({
+
+  })
+
+  constructor(private fb: FormBuilder,
               private dialog: MatDialog) { }
 
   ngOnInit() {
@@ -78,8 +95,14 @@ export class GenerateFormComponent implements OnInit {
 
         this.fieldInputDialog.afterClosed().subscribe(
           data => {
-            console.log("Dialog Output data", data);
-            this.previewData += JSON.stringify(data);;
+            if (data){
+              console.log("Dialog Output data", data);
+              this.previewData += JSON.stringify(data);
+
+              // TODO: Add to FormGroup
+              this.addInput(data);
+            }
+            
           }
         );
       } 
@@ -90,15 +113,117 @@ export class GenerateFormComponent implements OnInit {
           // width: '250px',
           // height: '200px'
         });
+
+        this.fieldSelectDialog.afterClosed().subscribe(
+          data => {
+            if (data){
+              console.log("Dialog Output data", data);
+              this.previewData += JSON.stringify(data);
+  
+              this.addSelect(data);
+            }
+          }
+        );
       }
       /** Radio Field */
       else if (event.previousIndex == 2){
+        this.fieldRadioDialog = this.dialog.open(FieldRadioComponent,{
+          hasBackdrop: true,
+          // width: '250px',
+          // height: '200px'
+        });
 
+        this.fieldRadioDialog.afterClosed().subscribe(
+          data => {
+            if (data){
+              console.log("Dialog Output data", data);
+              this.previewData += JSON.stringify(data);
+
+              // TODO: Add to FormGroup
+              this.addRadio(data);
+            }
+          }
+        );
       }
       /** Check box */
       else if (event.previousIndex == 3){
+        this.fieldCheckboxDialog = this.dialog.open(FieldCheckboxComponent,{
+          hasBackdrop: true,
+          // width: '250px',
+          // height: '200px'
+        });
 
+        this.fieldCheckboxDialog.afterClosed().subscribe(
+          data => {
+            if (data){
+              console.log("Dialog Output data", data);
+              this.previewData += JSON.stringify(data);
+
+              // TODO: Add to FormGroup
+              this.addCheckbox(data);
+            }
+          }
+        );
       }
     }
+  }
+
+  export(){
+    console.log("Exporting");
+    console.log(this.previewFormGroup.value);
+  }
+
+  // * Function for Adding Field
+  addInput(data){
+    // TODO: Create new FormControl
+    // TODO: Check if Need Validator
+    // * Email
+    if (data.type == 'email'){
+      this.previewFormGroup.addControl(data.formControlNameField, new FormControl('', [Validators.email]));
+    } 
+    // * Other types
+    else {
+      this.previewFormGroup.addControl(data.formControlNameField, new FormControl('', []));
+    }
+    
+    this.exportJson.application.push(data)
+    // TODO: Add height for grid
+    this.previewHeight += 1;
+
+    console.log(this.exportJson);
+  }
+
+  addRadio(data){
+    // TODO: Create new FormControl
+    this.previewFormGroup.addControl(data.formControlNameField, new FormControl('', []));
+    this.exportJson.application.push(data);
+
+    this.previewHeight += data.collections.length / 2;
+
+    console.log(this.exportJson);
+  }
+
+  addCheckbox(data){
+    // TODO: Create new FormControl
+    this.previewFormGroup.addControl(data.formControlNameField, new FormControl('', []));
+    this.exportJson.application.push(data);
+
+    this.previewHeight += 1;
+
+    console.log(this.exportJson);
+  }
+
+  addSelect(data){
+    // TODO: Create new FormControl
+    this.previewFormGroup.addControl(data.formControlNameField, new FormControl('', []));
+    this.exportJson.application.push(data);
+
+    this.previewHeight += 1;
+
+    console.log(this.exportJson);
+  }
+
+  removeField(data){
+    console.log(data)
   }
 }

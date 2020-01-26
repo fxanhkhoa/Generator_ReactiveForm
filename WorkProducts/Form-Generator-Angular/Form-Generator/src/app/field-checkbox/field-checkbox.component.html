@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>{{description}}</h2>
 
-<mat-dialog-content [formGroup]="inputForm">
+<mat-dialog-content [formGroup]="checkBoxGroup">
    
    <mat-tab-group>
       <!-- Tab Information -->
@@ -18,7 +18,7 @@
                         matInput 
                         placeholder = "Field_Type"
                         id = "fieldType"
-                        [formControl] = "inputForm.get('fieldType')"
+                        [formControl] = "checkBoxGroup.get('fieldType')"
                         formControlName= "fieldType"
                         [readonly]='true'
                         required
@@ -34,11 +34,11 @@
                         matInput 
                         placeholder = "Input ID"
                         id = "idField"
-                        [formControl] = "inputForm.get('idField')"
+                        [formControl] = "checkBoxGroup.get('idField')"
                         formControlName= "idField"
                         required
                      >
-                     <mat-error *ngIf="inputForm.get('idField')?.hasError('required')">
+                     <mat-error *ngIf="checkBoxGroup.get('idField')?.hasError('required')">
                         This Field is <strong>required</strong>
                      </mat-error>
                   </mat-form-field>
@@ -51,30 +51,11 @@
                         matInput 
                         placeholder = "Input Name"
                         id = "nameField"
-                        [formControl] = "inputForm.get('nameField')"
+                        [formControl] = "checkBoxGroup.get('nameField')"
                         formControlName= "nameField"
                         required
                      >
-                     <mat-error *ngIf="inputForm.get('nameField')?.hasError('required')">
-                        This Field is <strong>required</strong>
-                     </mat-error>
-                  </mat-form-field>
-               </div>
-         
-               <div class="col">
-                  <!-- Type Field -->
-                  <mat-form-field>
-                     <mat-label>Pick a Type</mat-label>
-                     <mat-select
-                        id = "type"
-                        [formControl] = "inputForm.get('type')"
-                        required
-                     >
-                        <mat-option *ngFor="let eachType of typeSelect" [value]="eachType.value">
-                           {{eachType.viewValue}}
-                        </mat-option>
-                     </mat-select>
-                     <mat-error *ngIf="inputForm.get('type')?.hasError('required')">
+                     <mat-error *ngIf="checkBoxGroup.get('nameField')?.hasError('required')">
                         This Field is <strong>required</strong>
                      </mat-error>
                   </mat-form-field>
@@ -89,13 +70,9 @@
                         matInput 
                         placeholder = "Input Place Holder Text"
                         id = "placeholder"
-                        [formControl] = "inputForm.get('placeholder')"
+                        [formControl] = "checkBoxGroup.get('placeholder')"
                         formControlName= "placeholder"
-                        required
                      >
-                     <mat-error *ngIf="inputForm.get('placeholder')?.hasError('required')">
-                        This Field is <strong>required</strong>
-                     </mat-error>           
                   </mat-form-field>
                </div>
          
@@ -106,16 +83,54 @@
                         matInput
                         placeholder = "Input Form Control Name"
                         id = "formControlNameField"
-                        [formControl] = "inputForm.get('formControlNameField')"
+                        [formControl] = "checkBoxGroup.get('formControlNameField')"
                         formControlName = "formControlNameField"
                         required
                      >
-                     <mat-error *ngIf="inputForm.get('formControlNameField')?.hasError('required')">
+                     <mat-error *ngIf="checkBoxGroup.get('formControlNameField')?.hasError('required')">
                         This Field is <strong>required</strong>
                      </mat-error>
                   </mat-form-field>
                </div>
             </div>   
+
+            <div class="row">
+                <div class="col">
+                    <!-- label Position Field -->
+                    <mat-form-field>
+                        <mat-label>Pick position for label</mat-label>
+                        <mat-select
+                            id = "type"
+                            [formControl] = "checkBoxGroup.get('labelPosition')"
+                            required
+                        >
+                        <mat-option *ngFor="let eachType of positionSelect" [value]="eachType.value">
+                            {{eachType.viewValue}}
+                        </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="checkBoxGroup.get('labelPosition')?.hasError('required')">
+                        This Field is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <!-- Items Collection -->
+            <div class="row">
+               <div class="col">
+                  <!-- checkbox Content Field -->
+                  <mat-form-field>
+                     <input
+                        matInput
+                        placeholder = "Input checkbox Name"
+                        id = "checkboxContent"
+                        [formControl] = "checkBoxGroup.get('checkboxContent')"
+                        formControlName = "checkboxContent"
+                        required
+                     >
+                  </mat-form-field>
+               </div>
+            </div>
          </div>
       </mat-tab>
 
@@ -137,7 +152,7 @@
                         cdkAutosizeMinRows="1"
                         cdkAutosizeMaxRows="30"
                         id = "cssField"
-                        [formControl] = "inputForm.get('cssField')"
+                        [formControl] = "checkBoxGroup.get('cssField')"
                         formControlName = "cssField"
                      >
                      </textarea>
@@ -165,7 +180,7 @@
                         cdkAutosizeMinRows="1"
                         cdkAutosizeMaxRows="30"
                         id = "scriptField"
-                        [formControl] = "inputForm.get('scriptField')"
+                        [formControl] = "checkBoxGroup.get('scriptField')"
                         formControlName = "scriptField"
                      >
                      </textarea>
@@ -177,7 +192,7 @@
    </mat-tab-group>
 </mat-dialog-content>
 
-<mat-dialog-actions [formGroup]="inputForm">
+<mat-dialog-actions >
    <button mat-raised-button (click)="close()">Close</button>
-   <button mat-raised-button color="primary" (click)="save()" [disabled]="!inputForm.valid">Save</button>
+   <button mat-raised-button color="primary" (click)="save()" [disabled]="!checkBoxGroup.valid">Save</button>
 </mat-dialog-actions>

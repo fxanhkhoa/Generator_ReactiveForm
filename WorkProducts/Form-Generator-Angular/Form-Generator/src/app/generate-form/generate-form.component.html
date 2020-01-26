@@ -1,62 +1,78 @@
 <div class="container">
-  <div class="example-container">
+  <!-- <div class="example-container">
     <h2>To do</h2>
-  
+
     <div
       cdkDropList
       #todoList="cdkDropList"
       [cdkDropListData]="todo"
       [cdkDropListConnectedTo]="[doneList]"
       class="example-list"
-      (cdkDropListDropped)="drop($event)">
-      <div class="example-box" *ngFor="let item of todo" cdkDrag>{{item}}</div>
+      (cdkDropListDropped)="drop($event)"
+    >
+      <div class="example-box" *ngFor="let item of todo" cdkDrag>
+        {{ item }}
+      </div>
     </div>
   </div>
-  
- <div class="example-container">
-   <h2>Done</h2>
- 
-   <div
-     cdkDropList
-     #doneList="cdkDropList"
-     [cdkDropListData]="done"
-     [cdkDropListConnectedTo]="[todoList]"
-     class="example-list"
-     (cdkDropListDropped)="drop($event)">
-     <div class="example-box" *ngFor="let item of done" cdkDrag>{{item}}</div>
-   </div>
- </div>
-  
- 
- 
- <mat-grid-list cols="3" rowHeight="3:1">
-   
-   <!-- List Form Field Title -->
-   <mat-grid-tile [colspan]="1" [rowspan]="1">
-     <h2 class="inside-grid">Pick Here</h2>
-   </mat-grid-tile>
 
-   <!-- Preview Title -->
-   <mat-grid-tile [colspan]="2" [rowspan]="1">
-     <h2 class="inside-grid">Preview</h2>
-   </mat-grid-tile>
-   
-   <!-- List Form Field -->
-   <mat-grid-tile [colspan]="1" [rowspan]="2">
-     <div
-       cdkDropList
-       #formfieldlist="cdkDropList"
-       [cdkDropListData]="listFormField"
-       [cdkDropListConnectedTo]="[previewfield]"
-       class="inside-grid"
-       (cdkDropListDropped)="dropFormField($event)"
+  <div class="example-container">
+    <h2>Done</h2>
+
+    <div
+      cdkDropList
+      #doneList="cdkDropList"
+      [cdkDropListData]="done"
+      [cdkDropListConnectedTo]="[todoList]"
+      class="example-list"
+      (cdkDropListDropped)="drop($event)"
+    >
+      <div class="example-box" *ngFor="let item of done" cdkDrag>
+        {{ item }}
+      </div>
+    </div>
+  </div> -->
+
+  <mat-grid-list cols="3" rowHeight="3:1">
+    <!-- List Form Field Title -->
+    <mat-grid-tile [colspan]="1" [rowspan]="1">
+      <h2 class="inside-grid">Pick Here</h2>
+    </mat-grid-tile>
+
+    <!-- Preview Title -->
+    <mat-grid-tile [colspan]="2" [rowspan]="1">
+      <h2 class="inside-grid">Preview</h2>
+    </mat-grid-tile>
+
+    <!-- List Form Field -->
+    <mat-grid-tile [colspan]="1" [rowspan]="previewHeight">
+      <div
+        cdkDropList
+        #formfieldlist="cdkDropList"
+        [cdkDropListData]="listFormField"
+        [cdkDropListConnectedTo]="[previewfield]"
+        class="inside-grid"
+        (cdkDropListDropped)="dropFormField($event)"
       >
-       <div class="box1" *ngFor="let item of listFormField" cdkDrag>{{item}}</div>
-     </div>
-   </mat-grid-tile>
- 
-   <!-- Preview -->
-   <mat-grid-tile [colspan]="2" [rowspan]="2">
+        <div class="box1" *ngFor="let item of listFormField" cdkDrag>
+          {{ item }}
+        </div>
+
+        <!-- All Field, for remove -->
+        <div style="padding-top: 5px;">
+          <div *ngFor="let element of exportJson.application" style="padding-left: 15px;">
+            <div class="row">
+              <button mat-flat-button color="warn" (click)="removeField(element)">{{element.fieldType}}<span><mat-icon>cancel</mat-icon></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+    </mat-grid-tile>
+
+    <!-- Preview -->
+    <mat-grid-tile [colspan]="2" [rowspan]="previewHeight" style="display: block; overflow: auto;">
       <div
         cdkDropList
         #previewfield="cdkDropList"
@@ -64,9 +80,91 @@
         class="inside-grid example-list preview-list"
         (cdkDropListDropped)="dropFormField($event)"
       >
-      {{previewData}}
-      </div>
-   </mat-grid-tile>
- </mat-grid-list>
-</div>
+        <!-- {{ previewData }} -->
+        <!-- All Form Here -->
+        <div [formGroup]="previewFormGroup">
+          <div *ngFor="let element of exportJson.application" style="padding-left: 20px;">
+            <!-- {{element.fieldType}} -->
 
+            <!-- Input Field -->
+            <div class="row" *ngIf="element.fieldType == 'input'">
+              <mat-form-field style="width: 80%;">
+                <input 
+                  matInput 
+                  type = {{element.type}}
+                  placeholder = {{element.placeholder}}
+                  id = {{element.idField}}
+                  name = {{element.nameField}}
+                  [formControl] = "previewFormGroup.get(element.formControlNameField)"
+                  formControlName= {{element.formControlNameField}}
+                >
+              </mat-form-field>
+            </div>
+            
+            <!-- Radio Field -->
+            <div class="row" *ngIf="element.fieldType == 'radio'">
+              <div class="label-radio">{{element.placeholder}}</div>
+              <mat-radio-group
+                class = "example-radio-group"
+                id = {{element.idField}}
+                name = {{element.nameField}}
+                [formControl] = "previewFormGroup.get(element.formControlNameField)"
+                formControlName = {{element.formControlNameField}}
+              >
+                <mat-radio-button 
+                  *ngFor="let eachCollection of element.collections" 
+                  [value]="eachCollection"
+                  style="margin-top: 2px;"
+                >
+                  {{eachCollection}}
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
+
+            <!-- Checkbox Field -->
+            <div class="row" *ngIf="element.fieldType == 'checkbox'">
+              <div class="label-radio" *ngIf="element.placeholder">{{element.placeholder}}</div>
+              <section class="example-radio-group">
+                <mat-checkbox
+                  id = {{element.idField}}
+                  name = {{element.nameField}}
+                  [formControl] = "previewFormGroup.get(element.formControlNameField)"
+                  formControlName = {{element.formControlNameField}}
+                  [labelPosition]= "element.labelPosition"
+                  [disabled]="'false'">
+                  {{element.checkboxContent}}
+                </mat-checkbox>
+              </section>
+            </div>
+
+            <!-- Select Field -->
+            <div class="row" *ngIf="element.fieldType == 'select'">
+              <!-- <div class="label-radio">{{element.placeholder}}</div> -->
+              <mat-form-field>
+                <mat-label>{{element.placeholder}}</mat-label>
+                <mat-select
+                  id = {{element.idField}}
+                  name = {{element.nameField}}
+                  placeholder = {{element.placeholder}}
+                  [formControl] = "previewFormGroup.get(element.formControlNameField)"
+                  formControlName = {{element.formControlNameField}}
+                  ngDefaultControl
+                >
+                  <mat-option *ngFor="let eachCollection of element.collections" [value]="eachCollection">
+                    {{eachCollection}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+  <div class="row" style="padding-top: 10px; padding-left: 18px;">
+    <div class="col">
+      <button mat-raised-button (click)="export()" color="primary">Export</button>
+    </div>
+  </div>
+</div>

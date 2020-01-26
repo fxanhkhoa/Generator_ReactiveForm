@@ -79,3 +79,19 @@
 .box1.cdk-drop-list-dragging {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
+
+.label-radio{
+  position:absolute;
+  font-weight: bold;
+  left:0;
+  width:100%;
+  margin-bottom: 5px;
+  padding-bottom: 5px;
+}
+
+.example-radio-group {
+  display: flex;
+  flex-direction: column;
+  padding-top: 5px;
+  margin: 15px 5px;
+}
