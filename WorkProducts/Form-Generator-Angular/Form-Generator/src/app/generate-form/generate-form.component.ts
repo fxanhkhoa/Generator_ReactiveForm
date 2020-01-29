@@ -7,6 +7,8 @@ import { FieldSelectComponent } from '../field-select/field-select.component';
 import { FieldRadioComponent } from '../field-radio/field-radio.component';
 import { FieldCheckboxComponent } from '../field-checkbox/field-checkbox.component';
 
+import { saveAs } from 'filesaver';
+
 @Component({
   selector: 'app-generate-form',
   templateUrl: './generate-form.component.html',
@@ -14,20 +16,20 @@ import { FieldCheckboxComponent } from '../field-checkbox/field-checkbox.compone
 })
 export class GenerateFormComponent implements OnInit {
 
-  todo = [
-    'Get to work',
-    'Pick up groceries',
-    'Go home',
-    'Fall asleep'
-  ];
+  // todo = [
+  //   'Get to work',
+  //   'Pick up groceries',
+  //   'Go home',
+  //   'Fall asleep'
+  // ];
 
-  done = [
-    'Get up',
-    'Brush teeth',
-    'Take a shower',
-    'Check e-mail',
-    'Walk dog'
-  ];
+  // done = [
+  //   'Get up',
+  //   'Brush teeth',
+  //   'Take a shower',
+  //   'Check e-mail',
+  //   'Walk dog'
+  // ];
 
   listFormField = [
     'input',
@@ -171,6 +173,16 @@ export class GenerateFormComponent implements OnInit {
   export(){
     console.log("Exporting");
     console.log(this.previewFormGroup.value);
+
+    for (let i = 0; i < this.exportJson.application.length; i++){ 
+      let nameField = this.exportJson.application[i].formControlNameField;
+      // TODO: Get data of form control
+      let dataValue = this.previewFormGroup.get(nameField).value;
+      this.exportJson.application[i].value = dataValue;
+    }
+
+    console.log(this.exportJson);
+    console.log(JSON.stringify(this.exportJson));
   }
 
   // * Function for Adding Field

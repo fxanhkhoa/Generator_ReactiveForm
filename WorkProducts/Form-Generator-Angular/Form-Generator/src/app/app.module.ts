@@ -19,7 +19,7 @@ import { GenerateFormComponent } from './generate-form/generate-form.component';
 import { MatGridListModule, MatDialogModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { MatOptionModule, MatSelectModule, MatButtonModule } from '@angular/material';
 import { MatTabsModule, MatIconModule, MatChipsModule, MatRadioModule } from '@angular/material';
-import { MatCheckboxModule } from '@angular/material';
+import { MatCheckboxModule, MatListModule } from '@angular/material';
 
 /** Drag Drop Module */
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -28,11 +28,13 @@ import { FieldInputComponent } from './field-input/field-input.component';
 import { FieldSelectComponent } from './field-select/field-select.component';
 import { FieldRadioComponent } from './field-radio/field-radio.component';
 import { FieldCheckboxComponent } from './field-checkbox/field-checkbox.component';
+import { ListFormComponent } from './list-form/list-form.component';
 
 /* define Route */
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'generate-form', component: GenerateFormComponent },
+  { path: 'list-form', component: ListFormComponent},
   {
     path: '',
     redirectTo: '/home',
@@ -51,6 +53,7 @@ const appRoutes: Routes = [
     FieldSelectComponent,
     FieldRadioComponent,
     FieldCheckboxComponent,
+    ListFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,7 +76,8 @@ const appRoutes: Routes = [
     MatIconModule,
     MatChipsModule,
     MatRadioModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent],
