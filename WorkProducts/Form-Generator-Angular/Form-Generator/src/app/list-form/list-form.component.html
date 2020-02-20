@@ -1,0 +1,92 @@
+<div class="container">
+    <h1 style="text-align: center;">List Form</h1>
+
+    <div class="row" style="width: 100%;">
+        <mat-list style="width: 100%;">
+            <mat-list-item><button mat-button (click)="loadForm('item1')">Item 1</button></mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item><button mat-button>Item 2</button></mat-list-item>
+        </mat-list>
+    </div>
+
+    <div class="row">
+        <!-- All Form Here -->
+        <div [formGroup]="previewFormGroup" *ngIf="allowShow">
+            <div *ngFor="let element of testJson.application" style="padding-left: 20px;">
+            <!-- {{element.fieldType}} -->
+
+            <!-- Input Field -->
+            <div class="row" *ngIf="element.fieldType == 'input'">
+                <mat-form-field style="width: 80%;">
+                <input 
+                    matInput 
+                    type = {{element.type}}
+                    placeholder = {{element.placeholder}}
+                    id = {{element.idField}}
+                    name = {{element.nameField}}
+                    [formControl] = "previewFormGroup.get(element.formControlNameField)"
+                    formControlName= {{element.formControlNameField}}
+                >
+                </mat-form-field>
+            </div>
+            
+            <!-- Radio Field -->
+            <div class="row" *ngIf="element.fieldType == 'radio'">
+                <div class="label-radio">{{element.placeholder}}</div>
+                <mat-radio-group
+                class = "example-radio-group"
+                id = {{element.idField}}
+                name = {{element.nameField}}
+                [formControl] = "previewFormGroup.get(element.formControlNameField)"
+                formControlName = {{element.formControlNameField}}
+                >
+                <mat-radio-button 
+                    *ngFor="let eachCollection of element.collections" 
+                    [value]="eachCollection"
+                    style="margin-top: 2px;"
+                >
+                    {{eachCollection}}
+                </mat-radio-button>
+                </mat-radio-group>
+            </div>
+
+            <!-- Checkbox Field -->
+            <div class="row" *ngIf="element.fieldType == 'checkbox'">
+                <div class="label-radio" *ngIf="element.placeholder">{{element.placeholder}}</div>
+                <section class="example-radio-group">
+                <mat-checkbox
+                    id = {{element.idField}}
+                    name = {{element.nameField}}
+                    [formControl] = "previewFormGroup.get(element.formControlNameField)"
+                    formControlName = {{element.formControlNameField}}
+                    [labelPosition]= "element.labelPosition"
+                    [disabled]="'false'">
+                    {{element.checkboxContent}}
+                </mat-checkbox>
+                </section>
+            </div>
+
+            <!-- Select Field -->
+            <div class="row" *ngIf="element.fieldType == 'select'">
+                <!-- <div class="label-radio">{{element.placeholder}}</div> -->
+                <mat-form-field>
+                <mat-label>{{element.placeholder}}</mat-label>
+                <mat-select
+                    id = {{element.idField}}
+                    name = {{element.nameField}}
+                    placeholder = {{element.placeholder}}
+                    [formControl] = "previewFormGroup.get(element.formControlNameField)"
+                    formControlName = {{element.formControlNameField}}
+                    ngDefaultControl
+                >
+                    <mat-option *ngFor="let eachCollection of element.collections" [value]="eachCollection">
+                    {{eachCollection}}
+                    </mat-option>
+                </mat-select>
+                </mat-form-field>
+            </div>
+            </div>
+        </div>
+    </div>
+    
+</div>

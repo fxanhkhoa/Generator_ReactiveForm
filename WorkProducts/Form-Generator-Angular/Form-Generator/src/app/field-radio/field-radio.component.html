@@ -1,0 +1,184 @@
+<h2 mat-dialog-title>{{description}}</h2>
+
+<mat-dialog-content [formGroup]="radioGroup">
+   
+   <mat-tab-group>
+      <!-- Tab Information -->
+      <mat-tab>
+         <ng-template mat-tab-label>
+            <mat-icon>note_add</mat-icon>
+            Fields Information
+         </ng-template>
+         <div class="container">
+            <div class="row">
+               <div class="col">
+                  <!-- Field Type -->
+                  <mat-form-field>
+                     <input
+                        matInput 
+                        placeholder = "Field_Type"
+                        id = "fieldType"
+                        [formControl] = "radioGroup.get('fieldType')"
+                        formControlName= "fieldType"
+                        [readonly]='true'
+                        required
+                     >
+                  </mat-form-field>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col">
+                  <!-- ID Field -->
+                  <mat-form-field>
+                     <input 
+                        matInput 
+                        placeholder = "Input ID"
+                        id = "idField"
+                        [formControl] = "radioGroup.get('idField')"
+                        formControlName= "idField"
+                        required
+                     >
+                     <mat-error *ngIf="radioGroup.get('idField')?.hasError('required')">
+                        This Field is <strong>required</strong>
+                     </mat-error>
+                  </mat-form-field>
+               </div>
+
+               <div class="col">
+                  <!-- Name Field -->
+                  <mat-form-field>
+                     <input 
+                        matInput 
+                        placeholder = "Input Name"
+                        id = "nameField"
+                        [formControl] = "radioGroup.get('nameField')"
+                        formControlName= "nameField"
+                        required
+                     >
+                     <mat-error *ngIf="radioGroup.get('nameField')?.hasError('required')">
+                        This Field is <strong>required</strong>
+                     </mat-error>
+                  </mat-form-field>
+               </div>
+            </div>
+            
+            <div class="row">
+               <div class="col">
+                  <!-- Place Holder Field -->
+                  <mat-form-field>
+                     <input
+                        matInput 
+                        placeholder = "Input Place Holder Text"
+                        id = "placeholder"
+                        [formControl] = "radioGroup.get('placeholder')"
+                        formControlName= "placeholder"
+                        required
+                     >
+                     <mat-error *ngIf="radioGroup.get('placeholder')?.hasError('required')">
+                        This Field is <strong>required</strong>
+                     </mat-error>           
+                  </mat-form-field>
+               </div>
+         
+               <div class="col">
+                  <!-- formControlName Field -->
+                  <mat-form-field>
+                     <input
+                        matInput
+                        placeholder = "Input Form Control Name"
+                        id = "formControlNameField"
+                        [formControl] = "radioGroup.get('formControlNameField')"
+                        formControlName = "formControlNameField"
+                        required
+                     >
+                     <mat-error *ngIf="radioGroup.get('formControlNameField')?.hasError('required')">
+                        This Field is <strong>required</strong>
+                     </mat-error>
+                  </mat-form-field>
+               </div>
+            </div>
+
+            <!-- Items Collection -->
+            <div class="row">
+               <div class="col">
+                  <mat-form-field style="width: 100%;">
+                     <mat-chip-list #chipList aria-label="Collection selection">
+                        <mat-chip *ngFor="let collection of collections" [selectable]="'true'"
+                                 [removable]="'true'" (removed)="remove(collection)">
+                           {{collection}}
+                           <mat-icon matChipRemove>cancel</mat-icon>
+                        </mat-chip>
+                        <input placeholder="New Collection (use comma or enter to split)..."
+                              [matChipInputFor]="chipList"
+                              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                              [matChipInputAddOnBlur]="'true'"
+                              (matChipInputTokenEnd)="add($event)">
+                     </mat-chip-list>
+                  </mat-form-field>
+               </div>
+            </div>
+         </div>
+      </mat-tab>
+
+      <!-- Tab CSS -->
+      <mat-tab>
+         <ng-template mat-tab-label>
+            <mat-icon>waves</mat-icon>
+            CSS
+         </ng-template>
+         <div class="container">
+            <div class="row">
+               <div class="col">
+                  <mat-form-field style="width: 700px;">
+                     <mat-label>Input CSS</mat-label>
+                     <textarea
+                        matInput
+                        cdkTextareaAutosize
+                        #autosize="cdkTextareaAutosize"
+                        cdkAutosizeMinRows="1"
+                        cdkAutosizeMaxRows="30"
+                        id = "cssField"
+                        [formControl] = "radioGroup.get('cssField')"
+                        formControlName = "cssField"
+                     >
+                     </textarea>
+                  </mat-form-field>
+               </div>
+            </div>
+         </div>
+      </mat-tab>
+
+      <!-- Tab Script -->
+      <mat-tab>
+         <ng-template mat-tab-label>
+            <mat-icon>list_alt</mat-icon>
+            Script
+         </ng-template>
+         <div class="container">
+            <div class="row">
+               <div class="col">
+                  <mat-form-field style="width: 700px;">
+                     <mat-label>Input Script</mat-label>
+                     <textarea
+                        matInput
+                        cdkTextareaAutosize
+                        #autosize="cdkTextareaAutosize"
+                        cdkAutosizeMinRows="1"
+                        cdkAutosizeMaxRows="30"
+                        id = "scriptField"
+                        [formControl] = "radioGroup.get('scriptField')"
+                        formControlName = "scriptField"
+                     >
+                     </textarea>
+                  </mat-form-field>
+               </div>
+            </div>
+         </div>
+      </mat-tab>
+   </mat-tab-group>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+   <button mat-raised-button (click)="close()">Close</button>
+   <button mat-raised-button color="primary" (click)="save()" [disabled]="!radioGroup.valid">Save</button>
+</mat-dialog-actions>
