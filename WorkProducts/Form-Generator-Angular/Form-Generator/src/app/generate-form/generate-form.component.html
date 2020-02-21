@@ -151,7 +151,7 @@
                   ngDefaultControl
                 >
                   <mat-option *ngIf="element.scriptField.condition == 'IF'"; else #noneIf>
-                    <mat-option *ngFor="let eachCollection of getData(element.scriptField.url)" [value]="eachCollection">
+                    <mat-option *ngFor="let eachCollection of loadData(element.scriptField.url)" [value]="eachCollection">
                       {{eachCollection}}
                     </mat-option>
                   </mat-option>
